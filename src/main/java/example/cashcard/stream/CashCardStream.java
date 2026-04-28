@@ -22,6 +22,11 @@ import java.util.function.Supplier;
 @Configuration
 public class CashCardStream {
 
+    /**
+     * Publie une nouvelle transaction toutes les secondes dans la
+     * messagerie (Kafka ou autre). La méthode retourne un Supplier
+     * de type Transaction :
+     */
     @Bean
     Supplier<Transaction> approvalRequest(DataSourceService ds) {
         return ds::getData;
