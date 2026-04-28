@@ -9,13 +9,13 @@ import java.util.Random;
 @Service
 public class DataSourceService {
 
+    // Cette méthode est utilisée pour générer un flux de transactions.
     public Transaction getData() {
         Cashcard cashcard = new Cashcard(
-                new Random().nextLong(),
+                Math.abs(new Random().nextLong(65535)),
                 "Sébastien",
-                new Random().nextDouble(100.0)
-
+                Math.abs(Math.round(new Random().nextDouble(100.0) * 100.0) / 100.0)
         );
-        return new Transaction(new Random().nextLong(), cashcard);
+        return new Transaction(Math.abs(new Random().nextLong(65535)), cashcard);
     }
 }

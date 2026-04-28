@@ -41,3 +41,16 @@ Heureusement, les systèmes de gestion de données avancés ne font pas partie d
 
 Nous allons abstraire la couche de données et générer nos propres transactions de cartes bancaires aléatoires à 
 des fins de démonstration.
+
+### Docker
+
+```bash
+$ docker run -d -p 9092:9092 --name kafka apache/kafka:latest
+$ docker exec -it kafka /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic approvalRequest-out-0
+```
+
+### Rsync
+
+```bash
+rsync -av --exclude='.git/' --exclude='target/' --delete /mnt/c/Users/sebastien.boulais/projects/event-driven-cashcard-application/ ~/event-driven-cashcard-application
+```
