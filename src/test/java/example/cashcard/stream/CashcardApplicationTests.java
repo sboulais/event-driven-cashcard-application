@@ -23,7 +23,7 @@ import static org.mockito.BDDMockito.given;
 @Import(TestChannelBinderConfiguration.class)
 class CashcardApplicationTests {
 
-	// Crée un mock Mockito et l'enregistre comme bean Spring
+	// Crée un mock de DataSourceService et l'enregistre comme bean Spring
 	// dans l'ApplicationContext, remplaçant tout bean existant
 	// du même type pendant les tests.
 	@MockitoBean

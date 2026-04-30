@@ -54,3 +54,9 @@ $ docker exec -it kafka /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-ser
 ```bash
 rsync -av --exclude='.git/' --exclude='target/' --delete /mnt/c/Users/sebastien.boulais/projects/event-driven-cashcard-application/ ~/event-driven-cashcard-application
 ```
+
+### Curl
+
+```bash
+curl -d '{"id":100,"cashcard":{"id":209,"owner":"Lilou","amountRequestedForAuth":215}}' -H "Content-Type: application/json" -X POST http://172.31.32.1:8080/publish/txn
+```
