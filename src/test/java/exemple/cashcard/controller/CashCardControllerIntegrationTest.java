@@ -20,6 +20,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = CashcardApplication.class)
 @Import({TestChannelBinderConfiguration.class})
@@ -79,27 +80,27 @@ class CashCardControllerIntegrationTest {
     }
 
     @Test
-    void should_Receive_When_PublishingTransaction
+    void should_ReceiveExpectedTransaction_When_PublishingTransaction
             (@Autowired OutputDestination outputDestination) throws IOException {
 
         // given
-        Transaction transaction = new Transaction(1L,
+        Transaction expected = new Transaction(1L,
                 new Cashcard(1L, "Sébastien", 156.0)
         );
 
         client.post()
                 .uri("/publish/txn")
-                .body(transaction)
+                .body(expected)
                 .exchange()
                 .returnResult();
 
         // when
-        Message<byte[]> result = outputDestination.receive(5000, "approvalRequest-out-0");
+        Message<byte[]> result = outputDestination.receive(5000, "approvalRequest-out-1");
 
         ObjectMapper objectMapper = new ObjectMapper();
         Transaction actual = objectMapper.readValue(result.getPayload(), Transaction.class);
 
         // then
-        assertThat(actual.id()).isEqualTo(transaction.id());
+        assertEquals(actual, expected);
     }
 }
