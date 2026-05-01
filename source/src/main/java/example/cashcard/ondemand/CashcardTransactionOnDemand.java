@@ -15,6 +15,6 @@ public class CashcardTransactionOnDemand {
     }
 
     public void publishTransaction(final Transaction transaction) {
-        streamBridge.send("approvalRequest-out-1", transaction);
+        streamBridge.send("approvalRequest-out-0", transaction);
     }
 }

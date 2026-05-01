@@ -1,4 +1,4 @@
-package exemple.cashcard.controller;
+package example.cashcard.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import example.cashcard.CashcardApplication;
