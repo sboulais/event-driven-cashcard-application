@@ -47,6 +47,7 @@ des fins de démonstration.
 ```bash
 $ docker run -d -p 9092:9092 --name kafka apache/kafka:latest
 $ docker exec -it kafka /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic approvalRequest-out-0
+$ docker exec -it kafka /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic enrichTransaction-out-0
 ```
 
 ### Rsync

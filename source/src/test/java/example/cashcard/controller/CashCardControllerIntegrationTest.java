@@ -1,7 +1,7 @@
 package example.cashcard.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import example.cashcard.CashcardApplication;
+import example.cashcard.CashcardSourceApplication;
 import example.cashcard.domain.Cashcard;
 import example.cashcard.domain.Transaction;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,7 @@ import java.io.IOException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest(classes = CashcardApplication.class)
+@SpringBootTest(classes = CashcardSourceApplication.class)
 @Import({TestChannelBinderConfiguration.class})
 class CashCardControllerIntegrationTest {
 

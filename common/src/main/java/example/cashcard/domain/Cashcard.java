@@ -5,3 +5,4 @@ public record Cashcard(
         String owner,
         Double amountRequestedForAuth) {
 }
+

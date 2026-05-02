@@ -5,3 +5,4 @@ public record Transaction(
         Cashcard cashcard) {
 
 }
+

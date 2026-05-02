@@ -9,6 +9,10 @@ import java.util.function.Supplier;
 
 @Configuration
 public class CashcardTransactionStream {
+
+    // topic par défaut :
+    // - approvalRequest-in-0
+    // - approvalRequest-out-0
     @Bean
     Supplier<Transaction> approvalRequest(DataSourceService ds) {
         return ds::getData;
