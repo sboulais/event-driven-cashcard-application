@@ -22,9 +22,15 @@ import java.io.IOException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest(classes = CashcardSourceApplication.class)
+@SpringBootTest(
+        classes = CashcardSourceApplication.class,
+        properties = {
+                "cashcard.datasource.flow.enabled=false",
+                "spring.cloud.function.definition="
+        }
+)
 @Import({TestChannelBinderConfiguration.class})
-class CashCardControllerIntegrationTest {
+class CashcardControllerIntegrationTest {
 
     private RestTestClient client;
 
@@ -95,7 +101,7 @@ class CashCardControllerIntegrationTest {
                 .returnResult();
 
         // when
-        Message<byte[]> result = outputDestination.receive(5000, "approvalRequest-out-1");
+        Message<byte[]> result = outputDestination.receive(5000, "approvalRequest-out-0");
 
         ObjectMapper objectMapper = new ObjectMapper();
         Transaction actual = objectMapper.readValue(result.getPayload(), Transaction.class);
