@@ -8,8 +8,8 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>cashcard-enricher</artifactId>
-    <name>enricher</name>
+    <artifactId>cashcard-sink</artifactId>
+    <name>sink</name>
     <dependencies>
         <dependency>
             <groupId>example.cashcard</groupId>
