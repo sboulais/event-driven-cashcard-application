@@ -15,11 +15,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.BDDMockito.given;
 
 // Démarre le contexte Spring
 @SpringBootTest(classes = CashcardEnricherApplication.class)
@@ -29,11 +31,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class CashcardTransactionEnricherIntegrationTest {
 
+    @MockitoBean
+    private EnrichementService enrichementService;
+
     @Test
     void should_EmitEnrichedTransaction_When_ReceivingTransactionOnApprovalRequestDestination(
             @Autowired InputDestination inputDestination,
-            @Autowired OutputDestination outputDestination,
-            @Autowired EnrichementService enrichementService
+            @Autowired OutputDestination outputDestination
     ) throws IOException {
 
         // given
@@ -41,7 +45,14 @@ class CashcardTransactionEnricherIntegrationTest {
                 new Cashcard(1L, "Issam", 318.0)
         );
 
-        EnrichedTransaction expected = enrichementService.enrichTransaction(transaction);
+        EnrichedTransaction expected = new EnrichedTransaction(
+                transaction.id(),
+                transaction.cashcard(),
+                ApprovalStatus.APPROVED,
+                new CardHolderData(null, transaction.cashcard().owner(), "Saint-Germain")
+        );
+
+        given(enrichementService.enrichTransaction(transaction)).willReturn(expected);
 
         // when
         Message<Transaction> message = MessageBuilder.withPayload(transaction).build();
