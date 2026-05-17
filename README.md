@@ -5,6 +5,28 @@ Spring Cloud Stream, qui consomme des transactions depuis un topic Kafka, les en
 (statut d'approbation, informations du porteur de carte), puis les republie sur un nouveau topic pour être consommées 
 par les services en aval. Les transactions invalides sont automatiquement routées vers une Dead Letter Queue.
 
+```mermaid
+flowchart LR
+BROKER[Broker Kafka]
+ENRICHER[Enrichisseur]
+SINK[Abonné]
+DATABASE[Console / Fichier / BDD]
+DLQ[Dead Letter Queue]
+A1[Générateur de transactions]
+--> |publishing topic approvalRequest-out-0| BROKER
+A2[API REST /publish/txn]
+--> |publishing topic approvalRequest-out-0| BROKER
+BROKER
+--> |subscribed topic approvalRequest-out-0| ENRICHER
+ENRICHER
+--> |publishing topic enrichTransaction-out-0| BROKER
+BROKER
+--> |subscribed topic enrichTransaction-out-0| SINK
+SINK --> DATABASE
+ENRICHER
+-.-> |amountRequestedForAuth < 0| DLQ
+```
+
 ### Build et run
 
 ```bash
