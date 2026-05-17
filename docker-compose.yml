@@ -20,6 +20,8 @@ services:
       KAFKA_NUM_PARTITIONS: 3
   source:
     build: ./source
+    ports:
+      - 8080:8080
     depends_on:
       - broker
   enricher:

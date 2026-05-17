@@ -69,6 +69,9 @@ public class EnrichementService {
     private static final Random RANDOM = new Random();
 
     public EnrichedTransaction enrichTransaction(Transaction transaction) {
+        if (transaction.cashcard().amountRequestedForAuth() < 0)
+            throw new IllegalArgumentException("Le montant demandé ne peut pas être négatif.");
+
         return new EnrichedTransaction(
                 transaction.id(),
                 transaction.cashcard(),
